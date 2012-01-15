@@ -50,15 +50,12 @@ manageHook = manageMoves
         manageFloats = composeOne [ className =? x -?> doFloat
                                     | x <- ["Xmessage"
                                            ,"feh"
-                                           ,"Wine"
-                                           ,"Dialog"
-                                           ,"Minecraft Launcher"
                                            ]
                                   ]
         manageMoves = composeOne [ className =? x -?> doShift w
-                                   | (x, w) <- [("Sonata", "5")
-                                               ,("Gpodder", "5")
-                                               ,("Qbittorrent", "6")
+                                   | (x, w) <- [("Uzbl-core", "3")
+                                               ,("Sonata", "4")
+                                               ,("Qbittorrent", "9")
                                                ]
                                  ]
         -- Window property helpers
