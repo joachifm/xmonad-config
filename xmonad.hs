@@ -36,7 +36,7 @@ main = XMonad.xmonad =<< statusBar config
 
 statusBar :: XMonad.XConfig l -> IO (XMonad.XConfig l)
 statusBar conf = do
-    xmproc <- spawnPipe "xmobar ~/.xmobarrc"
+    xmproc <- spawnPipe "xmobar" -- "xmobar ~/.xmobarrc"
     return $ conf { XMonad.logHook = dynamicLogWithPP xmobarPP
                     { ppOutput = hPutStrLn xmproc
                     , ppTitle  = xmobarColor "green" "" . shorten 50
