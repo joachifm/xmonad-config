@@ -80,13 +80,14 @@ layoutHook = modifiers layout
 
 ------------------------------------------------------------------------------
 
-keys conf@(XMonad.XConfig {XMonad.modMask = modMask}) = M.fromList $
-    [ ((modMask .|. shiftMask, xK_Return), XMonad.spawn $ XMonad.terminal conf)
-    , ((modMask, xK_p), XMonad.spawn "yeganesh_run")
-    , ((modMask .|. shiftMask, xK_b),
-        runOrRaise "firefox" (className =? "Firefox"))
-    , ((modMask .|. shiftMask, xK_e),
-       runOrRaise "emacs" (className =? "Emacs"))
+keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
+    [ ((modm .|. shiftMask, xK_Return), XMonad.spawn $ XMonad.terminal conf)
+    , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 3) | dzen2")
+    , ((modm, xK_p), XMonad.spawn "yeganesh_run")
+    , ((modm .|. shiftMask, xK_b),
+        runOrRaise "uzbl-browser" (className =? "Uzbl-core"))
+    , ((modm .|. shiftMask, xK_e),
+       runOrRaise "edit-server" (className =? "Emacs"))
 
     -- Window management
     , ((modMask, xK_g), goToSelected defaultGSConfig)
@@ -95,31 +96,31 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_s), killAllOtherCopies)
 
     -- Workspaces
-    , ((modMask, xK_Left), moveTo Prev NonEmptyWS)
-    , ((modMask, xK_Right), moveTo Next NonEmptyWS)
-    , ((modMask .|. shiftMask, xK_Left), shiftToPrev >> prevWS)
-    , ((modMask .|. shiftMask, xK_Right), shiftToNext >> nextWS)
+    , ((modm, xK_Left), moveTo Prev NonEmptyWS)
+    , ((modm, xK_Right), moveTo Next NonEmptyWS)
+    , ((modm .|. shiftMask, xK_Left), shiftToPrev >> prevWS)
+    , ((modm .|. shiftMask, xK_Right), shiftToNext >> nextWS)
 
     -- Layouts
-    , ((modMask, xK_space), sendMessage XMonad.NextLayout)
-    , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
-    , ((modMask, xK_n), refresh)
+    , ((modm, xK_space), sendMessage XMonad.NextLayout)
+    , ((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
+    , ((modm, xK_n), refresh)
 
     -- Window focus
-    , ((modMask, xK_k), windows W.focusUp)
-    , ((modMask, xK_j), windows W.focusDown)
-    , ((modMask, xK_m), windows W.focusMaster)
+    , ((modm, xK_k), windows W.focusUp)
+    , ((modm, xK_j), windows W.focusDown)
+    , ((modm, xK_m), windows W.focusMaster)
 
     -- Master window
-    , ((modMask, xK_Return), windows W.swapMaster)
-    , ((modMask .|. shiftMask, xK_k), windows W.swapUp)
-    , ((modMask .|. shiftMask, xK_j), windows W.swapDown)
+    , ((modm, xK_Return), windows W.swapMaster)
+    , ((modm .|. shiftMask, xK_k), windows W.swapUp)
+    , ((modm .|. shiftMask, xK_j), windows W.swapDown)
 
     -- XMonad
-    , ((modMask .|. shiftMask, xK_q), XMonad.io (exitWith ExitSuccess))
-    , ((modMask, xK_q), XMonad.spawn "xmonad --recompile && xmonad --restart")
+    , ((modm .|. shiftMask, xK_q), XMonad.io (exitWith ExitSuccess))
+    , ((modm, xK_q), XMonad.spawn "xmonad --recompile && xmonad --restart")
     ]
     ++
-    [((m .|. modMask, k), windows $ f i)
+    [((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
