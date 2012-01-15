@@ -15,6 +15,7 @@ import XMonad.Operations
 
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
+import XMonad.Actions.FloatSnap
 import XMonad.Actions.GridSelect
 import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
@@ -90,10 +91,24 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
        runOrRaise "edit-server" (className =? "Emacs"))
 
     -- Window management
-    , ((modMask, xK_g), goToSelected defaultGSConfig)
-    , ((modMask, xK_s), windows copyToAll)
-    , ((modMask .|. shiftMask, xK_c), kill1)
-    , ((modMask .|. shiftMask, xK_s), killAllOtherCopies)
+    , ((modm, xK_w), goToSelected defaultGSConfig)
+    , ((modm, xK_s), windows copyToAll)
+    , ((modm .|. shiftMask, xK_c), kill1)
+    , ((modm .|. shiftMask, xK_s), killAllOtherCopies)
+
+    -- Floating window movement
+    --
+    -- Note that these bindings shadow bindings for moving windows from
+    -- one workspace to the next
+    -- XXX: why don't these work?
+    , ((modm, xK_Left), withFocused $ snapMove L Nothing)
+    , ((modm, xK_Right), withFocused $ snapMove R Nothing)
+    , ((modm, xK_Up), withFocused $ snapMove U Nothing)
+    , ((modm, xK_Down), withFocused $ snapMove D Nothing)
+    , ((modm .|. shiftMask, xK_Left), withFocused $ snapShrink R Nothing)
+    , ((modm .|. shiftMask, xK_Right), withFocused $ snapGrow R Nothing)
+    , ((modm .|. shiftMask, xK_Up), withFocused $ snapShrink D Nothing)
+    , ((modm .|. shiftMask, xK_Down), withFocused $ snapGrow D Nothing)
 
     -- Workspaces
     , ((modm, xK_Left), moveTo Prev NonEmptyWS)
