@@ -20,15 +20,28 @@ import XMonad.Actions.GridSelect
 import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
+import XMonad.Hooks.DynamicLog hiding (statusBar)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
+import XMonad.Util.Run
 
 ------------------------------------------------------------------------------
 
 main :: IO ()
-main = XMonad.xmonad config
+main = XMonad.xmonad =<< statusBar config
+
+------------------------------------------------------------------------------
+
+statusBar :: XMonad.XConfig l -> IO (XMonad.XConfig l)
+statusBar conf = do
+    xmproc <- spawnPipe "xmobar ~/.xmobarrc"
+    return $ conf { XMonad.logHook = dynamicLogWithPP xmobarPP
+                    { ppOutput = hPutStrLn xmproc
+                    , ppTitle  = xmobarColor "green" "" . shorten 50
+                    }
+                  }
 
 ------------------------------------------------------------------------------
 
