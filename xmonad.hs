@@ -23,6 +23,7 @@ import XMonad.Layout.NoBorders
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.Place
 
 ------------------------------------------------------------------------------
 
@@ -42,12 +43,17 @@ config = ewmh $ XMonad.defaultConfig
 
 ------------------------------------------------------------------------------
 
-manageHook = manageMoves
+manageHook = managePlace
+         <+> manageMoves
          <+> manageFloats
          <+> manageDocks
          <+> (isFullscreen --> doFullFloat)
          <+> XMonad.manageHook XMonad.defaultConfig
     where
+        managePlace  = composeOne [ className =? x -?> placeHook (fixed (1,1)) -- place mplayer at bottom
+                                    | x <- ["MPlayer"
+                                           ]
+                                  ]
         manageFloats = composeOne [ className =? x -?> doFloat
                                     | x <- ["Xmessage"
                                            ,"feh"
