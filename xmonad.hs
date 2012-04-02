@@ -90,7 +90,7 @@ manageHook = managePlace
 layoutHook = modifiers layout
     where
         modifiers = layoutHints . avoidStruts . smartBorders
-        layout = Full ||| wide ||| tall
+        layout = Full ||| tall ||| wide
 
         wide = Mirror tall
         tall = Tall nmaster delta ratio
