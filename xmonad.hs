@@ -62,28 +62,32 @@ manageHook = managePlace
          <+> manageDocks
          <+> (isFullscreen --> doFullFloat)
          <+> XMonad.manageHook XMonad.defaultConfig
-    where
-        managePlace  = composeOne [ className =? x -?> placeHook (fixed (1,1)) -- place mplayer at bottom
-                                    | x <- ["MPlayer"
-                                           ]
-                                  ]
-        manageFloats = composeOne [ className =? x -?> doFloat
-                                    | x <- ["Xmessage"
-                                           ,"feh"
-                                           ]
-                                  ]
-        manageMoves = composeOne [ className =? x -?> doShift w
-                                   | (x, w) <- [("Uzbl-core", "3")
-                                               ,("Sonata", "4")
-                                               ,("Qbittorrent", "9")
-                                               ]
-                                 ]
-        -- Window property helpers
-        {-
-        windowRole = stringProperty "WM_WINDOW_ROLE"
-        windowName = stringProperty "WM_NAME"
-        iconName   = stringProperty "WM_ICON_NAME"
-        -}
+
+managePlacement = composeOne
+    [ className =? x -?> placeHook (fixed (1,1)) -- place in the bottom-right corner
+                 | x <- [ "MPlayer" ]
+    ]
+
+manageFloats = composeOne
+    [ className =? x -?> doFloat
+                 | x <- [ "Xmessage"
+                          ,"feh"
+                        ]
+    ]
+
+manageMoves = composeOne
+    [ className =? x -?> doShift w
+                | (x, w) <- [ ("Uzbl-core", "3")
+                            , ("Sonata", "4")
+                            , ("Qbittorrent", "9")
+                            ]
+    ]
+
+{- Window property helpers
+windowRole = stringProperty "WM_WINDOW_ROLE"
+windowName = stringProperty "WM_NAME"
+iconName   = stringProperty "WM_ICON_NAME"
+-}
 
 ------------------------------------------------------------------------------
 
