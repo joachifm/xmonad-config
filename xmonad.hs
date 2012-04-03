@@ -119,6 +119,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_s), windows copyToAll)
     , ((modm .|. shiftMask, xK_c), kill1)
     , ((modm .|. shiftMask, xK_s), killAllOtherCopies)
+    , ((modm, xK_t), withFocused $ windows . W.sink)
 
     -- Floating window movement
     --
