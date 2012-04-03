@@ -21,7 +21,6 @@ import XMonad.Actions.RotSlaves
 import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
-import XMonad.Layout.TwoPane
 import XMonad.Hooks.DynamicLog hiding (statusBar)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -111,11 +110,10 @@ iconName   = stringProperty "WM_ICON_NAME"
 layoutHook = modifiers layout
     where
         modifiers = layoutHints . avoidStruts . smartBorders
-        layout = Full ||| tall ||| pane ||| wide
+        layout = tall ||| Full
 
-        pane = TwoPane delta ratio
-        wide = Mirror tall
         tall = Tall nmaster delta ratio
+
         nmaster = 1
         ratio = 1/2
         delta = 3/100
@@ -137,7 +135,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_c), kill1)
     , ((modm .|. shiftMask, xK_s), killAllOtherCopies)
     , ((modm, xK_t), withFocused $ windows . W.sink)
-
+      
     -- Floating window movement
     --
     -- Note that these bindings shadow bindings for moving windows from
