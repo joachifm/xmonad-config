@@ -57,7 +57,7 @@ config = ewmh $ XMonad.defaultConfig
 
 ------------------------------------------------------------------------------
 
-manageHook = managePlace
+manageHook = managePlacement
          <+> manageMoves
          <+> manageFloats
          <+> manageDocks
