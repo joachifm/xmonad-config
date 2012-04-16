@@ -122,7 +122,7 @@ layoutHook = modifiers layout
 
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), XMonad.spawn $ XMonad.terminal conf)
-    , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 3) | dzen2")
+    , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
     , ((modm, xK_p), XMonad.spawn "yeganesh_run")
     , ((modm .|. shiftMask, xK_b),
         runOrRaise "uzbl-browser" (className =? "Uzbl-core"))
@@ -135,7 +135,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_c), kill1)
     , ((modm .|. shiftMask, xK_s), killAllOtherCopies)
     , ((modm, xK_t), withFocused $ windows . W.sink)
-      
+
     -- Floating window movement
     --
     -- Note that these bindings shadow bindings for moving windows from
