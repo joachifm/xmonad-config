@@ -17,6 +17,7 @@ import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
 import XMonad.Actions.FloatSnap
 import XMonad.Actions.GridSelect
+import XMonad.Actions.RotSlaves
 import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
@@ -56,44 +57,63 @@ config = ewmh $ XMonad.defaultConfig
 
 ------------------------------------------------------------------------------
 
-manageHook = managePlace
+manageHook = managePlacement
          <+> manageMoves
          <+> manageFloats
          <+> manageDocks
+         <+> manageFocus
          <+> (isFullscreen --> doFullFloat)
          <+> XMonad.manageHook XMonad.defaultConfig
-    where
-        managePlace  = composeOne [ className =? x -?> placeHook (fixed (1,1)) -- place mplayer at bottom
-                                    | x <- ["MPlayer"
-                                           ]
-                                  ]
-        manageFloats = composeOne [ className =? x -?> doFloat
-                                    | x <- ["Xmessage"
-                                           ,"feh"
-                                           ]
-                                  ]
-        manageMoves = composeOne [ className =? x -?> doShift w
-                                   | (x, w) <- [("Uzbl-core", "3")
-                                               ,("Sonata", "4")
-                                               ,("Qbittorrent", "9")
-                                               ]
-                                 ]
-        -- Window property helpers
-        {-
-        windowRole = stringProperty "WM_WINDOW_ROLE"
-        windowName = stringProperty "WM_NAME"
-        iconName   = stringProperty "WM_ICON_NAME"
-        -}
+
+managePlacement = composeOne
+    [ className =? x -?> placeHook (fixed (1,1)) -- place in the bottom-right corner
+                 | x <- [ "MPlayer" ]
+    ]
+
+manageFloats = composeOne
+    [ className =? x -?> doFloat
+                 | x <- [ "Xmessage"
+                          ,"feh"
+                        ]
+    ]
+
+manageMoves = composeOne
+    [ className =? x -?> doShift w
+                | (x, w) <- [ ("Uzbl-core", "3")
+                            , ("Sonata", "4")
+                            , ("Qbittorrent", "9")
+                            ]
+    ]
+
+-- Adapted from http://ruderich.org/simon/config/xmonad
+manageFocus = composeOne
+    [ -- prevent new windows from spawning in the master pane
+      return True -?> doF avoidMaster
+      -- prevent windwos moved to other workspaces to steal focus
+    , return True -?> doF W.focusDown
+    ]
+
+-- | Prevent windows from spawning in the master pane.
+avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
+avoidMaster = W.modify' $ \c -> case c of
+    W.Stack t [] (r:rs) -> W.Stack r [] (t:rs)
+    otherwise           -> c
+
+{- Window property helpers
+windowRole = stringProperty "WM_WINDOW_ROLE"
+windowName = stringProperty "WM_NAME"
+iconName   = stringProperty "WM_ICON_NAME"
+-}
 
 ------------------------------------------------------------------------------
 
 layoutHook = modifiers layout
     where
         modifiers = layoutHints . avoidStruts . smartBorders
-        layout = Full ||| wide ||| tall
+        layout = tall ||| Full
 
-        wide = Mirror tall
         tall = Tall nmaster delta ratio
+
         nmaster = 1
         ratio = 1/2
         delta = 3/100
@@ -102,7 +122,7 @@ layoutHook = modifiers layout
 
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), XMonad.spawn $ XMonad.terminal conf)
-    , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 3) | dzen2")
+    , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
     , ((modm, xK_p), XMonad.spawn "yeganesh_run")
     , ((modm .|. shiftMask, xK_b),
         runOrRaise "uzbl-browser" (className =? "Uzbl-core"))
@@ -114,6 +134,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_s), windows copyToAll)
     , ((modm .|. shiftMask, xK_c), kill1)
     , ((modm .|. shiftMask, xK_s), killAllOtherCopies)
+    , ((modm, xK_t), withFocused $ windows . W.sink)
 
     -- Floating window movement
     --
@@ -149,6 +170,9 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Return), windows W.swapMaster)
     , ((modm .|. shiftMask, xK_k), windows W.swapUp)
     , ((modm .|. shiftMask, xK_j), windows W.swapDown)
+
+    -- Slave windows
+    , ((modm .|. shiftMask, xK_Tab), rotSlavesUp)
 
     -- XMonad
     , ((modm .|. shiftMask, xK_q), XMonad.io (exitWith ExitSuccess))
