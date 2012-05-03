@@ -26,6 +26,8 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
+import XMonad.Prompt
+import XMonad.Prompt.Shell
 import XMonad.Util.Run
 
 ------------------------------------------------------------------------------
@@ -124,6 +126,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), XMonad.spawn $ XMonad.terminal conf)
     , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
     , ((modm, xK_p), XMonad.spawn "yeganesh_run")
+    , ((modm, xK_x), shellPrompt defaultXPConfig)
     , ((modm .|. shiftMask, xK_b),
         runOrRaise "uzbl-browser" (className =? "Uzbl-core"))
     , ((modm .|. shiftMask, xK_e),
