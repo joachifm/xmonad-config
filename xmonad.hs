@@ -81,7 +81,7 @@ manageFloats = composeOne
 
 manageMoves = composeOne
     [ className =? x -?> doShift w
-                | (x, w) <- [ ("Uzbl-core", "3")
+                | (x, w) <- [ ("Firefox", "3")
                             , ("Sonata", "4")
                             , ("Qbittorrent", "9")
                             ]
@@ -128,7 +128,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_p), XMonad.spawn "yeganesh_run")
     , ((modm, xK_x), shellPrompt defaultXPConfig)
     , ((modm .|. shiftMask, xK_b),
-        runOrRaise "uzbl-browser" (className =? "Uzbl-core"))
+        runOrRaise "web-browser" (className =? "Firefox"))
     , ((modm .|. shiftMask, xK_e),
        runOrRaise "edit-server" (className =? "Emacs"))
 
