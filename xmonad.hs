@@ -81,7 +81,8 @@ manageFloats = composeOne
 
 manageMoves = composeOne
     [ className =? x -?> doShift w
-                | (x, w) <- [ ("Firefox", "3")
+                | (x, w) <- [ ("Emacs", "1")
+                            , ("Firefox", "3")
                             , ("Sonata", "4")
                             , ("Qbittorrent", "9")
                             ]
