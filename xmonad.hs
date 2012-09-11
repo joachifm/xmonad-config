@@ -130,7 +130,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_x), shellPrompt defaultXPConfig)
     , ((modm, xK_l), XMonad.spawn "xlock")
     , ((modm .|. shiftMask, xK_b),
-        runOrRaise "web-browser" (className =? "Firefox"))
+        runOrRaise "firefox" (className =? "Firefox"))
     , ((modm .|. shiftMask, xK_e),
        runOrRaise "edit-server" (className =? "Emacs"))
 
