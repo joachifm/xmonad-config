@@ -126,7 +126,7 @@ layoutHook = modifiers layout
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), XMonad.spawn $ XMonad.terminal conf)
     , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
-    , ((modm, xK_p), XMonad.spawn "yeganesh_run")
+    , ((modm, xK_p), XMonad.spawn "dmenu_run")
     , ((modm, xK_x), shellPrompt defaultXPConfig)
     , ((modm .|. shiftMask, xK_b),
         runOrRaise "web-browser" (className =? "Firefox"))
