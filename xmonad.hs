@@ -128,6 +128,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
     , ((modm, xK_p), XMonad.spawn "dmenu_run")
     , ((modm, xK_x), shellPrompt defaultXPConfig)
+    , ((modm, xK_l), XMonad.spawn "xlock")
     , ((modm .|. shiftMask, xK_b),
         runOrRaise "web-browser" (className =? "Firefox"))
     , ((modm .|. shiftMask, xK_e),
