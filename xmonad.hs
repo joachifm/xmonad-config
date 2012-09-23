@@ -57,7 +57,13 @@ config = ewmh $ XMonad.defaultConfig
        , XMonad.keys = keys
        , XMonad.layoutHook = layoutHook
        , XMonad.manageHook = manageHook
+       , XMonad.workspaces = workspaces
        }
+
+------------------------------------------------------------------------------
+
+workspaces = [ "Work", "Terminals", "Web", "Media" ]
+             ++ map show ([5..9] :: [Int])
 
 ------------------------------------------------------------------------------
 
@@ -84,10 +90,9 @@ manageFloats = composeOne
 
 manageMoves = composeOne
     [ className =? x -?> doShift w
-                | (x, w) <- [ ("Emacs", "1")
-                            , ("Firefox", "3")
-                            , ("Sonata", "4")
-                            , ("Qbittorrent", "9")
+                | (x, w) <- [ ("Emacs", "Work")
+                            , ("Firefox", "Web")
+                            , ("Sonata", "Media")
 			    , ("Deluge", "9")
                             ]
     ]
