@@ -182,7 +182,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Slave windows
     , ((modm .|. shiftMask, xK_Tab), rotSlavesUp)
 
-    -- XMonad
+    -- XMonad control
     , ((modm .|. shiftMask, xK_q), XMonad.io (exitWith ExitSuccess))
     , ((modm, xK_q), XMonad.spawn "xmonad --recompile && xmonad --restart")
     -- Mouse control
