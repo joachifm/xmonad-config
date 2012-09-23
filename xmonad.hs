@@ -133,6 +133,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_p), XMonad.spawn "dmenu_run")
     , ((modm, xK_x), shellPrompt defaultXPConfig)
     , ((modm, xK_l), XMonad.spawn "xlock")
+    , ((modm, xK_g), XMonad.spawn "urxvt -e ghci")
     , ((modm .|. shiftMask, xK_b),
         runOrRaise "firefox" (className =? "Firefox"))
     , ((modm .|. shiftMask, xK_e),
