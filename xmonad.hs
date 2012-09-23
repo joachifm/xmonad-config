@@ -87,6 +87,7 @@ manageMoves = composeOne
                             , ("Firefox", "3")
                             , ("Sonata", "4")
                             , ("Qbittorrent", "9")
+			    , ("Deluge", "9")
                             ]
     ]
 
