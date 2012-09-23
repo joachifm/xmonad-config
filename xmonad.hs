@@ -100,20 +100,6 @@ manageMoves = composeOne
                             ]
     ]
 
--- Adapted from http://ruderich.org/simon/config/xmonad
-manageFocus = composeOne
-    [ -- prevent new windows from spawning in the master pane
-      return True -?> doF avoidMaster
-      -- prevent windwos moved to other workspaces to steal focus
-    , return True -?> doF W.focusDown
-    ]
-
--- | Prevent windows from spawning in the master pane.
-avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
-avoidMaster = W.modify' $ \c -> case c of
-    W.Stack t [] (r:rs) -> W.Stack r [] (t:rs)
-    _                   -> c
-
 {- Window property helpers
 windowRole = stringProperty "WM_WINDOW_ROLE"
 windowName = stringProperty "WM_NAME"
