@@ -18,6 +18,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.FloatSnap
 import XMonad.Actions.GridSelect
 import XMonad.Actions.RotSlaves
+import XMonad.Actions.Warp
 import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
@@ -182,6 +183,8 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     -- XMonad
     , ((modm .|. shiftMask, xK_q), XMonad.io (exitWith ExitSuccess))
     , ((modm, xK_q), XMonad.spawn "xmonad --recompile && xmonad --restart")
+    -- Mouse control
+    , ((modm, xK_b), banish LowerRight)
     ]
     ++
     [((m .|. modm, k), windows $ f i)
