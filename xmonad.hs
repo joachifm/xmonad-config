@@ -61,6 +61,7 @@ manageHook = managePlacement
          <+> manageMoves
          <+> manageFloats
          <+> manageDocks
+         <+> manageFocus
          <+> (isFullscreen --> doFullFloat)
          <+> XMonad.manageHook XMonad.defaultConfig
 
@@ -84,6 +85,20 @@ manageMoves = composeOne
                             ]
     ]
 
+-- Adapted from http://ruderich.org/simon/config/xmonad
+manageFocus = composeOne
+    [ -- prevent new windows from spawning in the master pane
+      return True -?> doF avoidMaster
+      -- prevent windwos moved to other workspaces to steal focus
+    , return True -?> doF W.focusDown
+    ]
+
+-- | Prevent windows from spawning in the master pane.
+avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
+avoidMaster = W.modify' $ \c -> case c of
+    W.Stack t [] (r:rs) -> W.Stack r [] (t:rs)
+    otherwise           -> c
+
 {- Window property helpers
 windowRole = stringProperty "WM_WINDOW_ROLE"
 windowName = stringProperty "WM_NAME"
@@ -95,10 +110,10 @@ iconName   = stringProperty "WM_ICON_NAME"
 layoutHook = modifiers layout
     where
         modifiers = layoutHints . avoidStruts . smartBorders
-        layout = Full ||| tall ||| wide
+        layout = tall ||| Full
 
-        wide = Mirror tall
         tall = Tall nmaster delta ratio
+
         nmaster = 1
         ratio = 1/2
         delta = 3/100
@@ -107,7 +122,7 @@ layoutHook = modifiers layout
 
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), XMonad.spawn $ XMonad.terminal conf)
-    , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 3) | dzen2")
+    , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
     , ((modm, xK_p), XMonad.spawn "yeganesh_run")
     , ((modm .|. shiftMask, xK_b),
         runOrRaise "uzbl-browser" (className =? "Uzbl-core"))
