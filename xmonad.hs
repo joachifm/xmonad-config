@@ -18,14 +18,18 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.FloatSnap
 import XMonad.Actions.GridSelect
 import XMonad.Actions.RotSlaves
+import XMonad.Actions.Warp
 import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
+import XMonad.Layout.ShowWName
 import XMonad.Hooks.DynamicLog hiding (statusBar)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
+import XMonad.Prompt
+import XMonad.Prompt.Shell
 import XMonad.Util.Run
 
 ------------------------------------------------------------------------------
@@ -72,16 +76,19 @@ managePlacement = composeOne
 
 manageFloats = composeOne
     [ className =? x -?> doFloat
-                 | x <- [ "Xmessage"
-                          ,"feh"
+                 | x <- [ "Wine"
+		     	, "Xmessage"
+                        , "feh"
                         ]
     ]
 
 manageMoves = composeOne
     [ className =? x -?> doShift w
-                | (x, w) <- [ ("Uzbl-core", "3")
+                | (x, w) <- [ ("Emacs", "1")
+                            , ("Firefox", "3")
                             , ("Sonata", "4")
                             , ("Qbittorrent", "9")
+			    , ("Deluge", "9")
                             ]
     ]
 
@@ -109,7 +116,7 @@ iconName   = stringProperty "WM_ICON_NAME"
 
 layoutHook = modifiers layout
     where
-        modifiers = layoutHints . avoidStruts . smartBorders
+        modifiers = showWName . layoutHints . avoidStruts . smartBorders
         layout = tall ||| Full
 
         tall = Tall nmaster delta ratio
@@ -123,9 +130,11 @@ layoutHook = modifiers layout
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), XMonad.spawn $ XMonad.terminal conf)
     , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
-    , ((modm, xK_p), XMonad.spawn "yeganesh_run")
+    , ((modm, xK_p), XMonad.spawn "dmenu_run")
+    , ((modm, xK_x), shellPrompt defaultXPConfig)
+    , ((modm, xK_l), XMonad.spawn "xlock")
     , ((modm .|. shiftMask, xK_b),
-        runOrRaise "uzbl-browser" (className =? "Uzbl-core"))
+        runOrRaise "firefox" (className =? "Firefox"))
     , ((modm .|. shiftMask, xK_e),
        runOrRaise "edit-server" (className =? "Emacs"))
 
@@ -137,18 +146,22 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_t), withFocused $ windows . W.sink)
 
     -- Floating window movement
-    --
-    -- Note that these bindings shadow bindings for moving windows from
-    -- one workspace to the next
-    -- XXX: why don't these work?
-    , ((modm, xK_Left), withFocused $ snapMove L Nothing)
-    , ((modm, xK_Right), withFocused $ snapMove R Nothing)
-    , ((modm, xK_Up), withFocused $ snapMove U Nothing)
-    , ((modm, xK_Down), withFocused $ snapMove D Nothing)
-    , ((modm .|. shiftMask, xK_Left), withFocused $ snapShrink R Nothing)
-    , ((modm .|. shiftMask, xK_Right), withFocused $ snapGrow R Nothing)
-    , ((modm .|. shiftMask, xK_Up), withFocused $ snapShrink D Nothing)
-    , ((modm .|. shiftMask, xK_Down), withFocused $ snapGrow D Nothing)
+    , ((modm .|. controlMask, xK_Left),
+       withFocused $ snapMove L Nothing)
+    , ((modm .|. controlMask, xK_Right),
+       withFocused $ snapMove R Nothing)
+    , ((modm .|. controlMask, xK_Up),
+       withFocused $ snapMove U Nothing)
+    , ((modm .|. controlMask, xK_Down),
+       withFocused $ snapMove D Nothing)
+    , ((modm .|. controlMask .|. shiftMask, xK_Left),
+       withFocused $ snapShrink R Nothing)
+    , ((modm .|. controlMask .|. shiftMask, xK_Right),
+       withFocused $ snapGrow R Nothing)
+    , ((modm .|. controlMask .|. shiftMask, xK_Up),
+       withFocused $ snapShrink D Nothing)
+    , ((modm .|. controlMask .|. shiftMask, xK_Down),
+       withFocused $ snapGrow D Nothing)
 
     -- Workspaces
     , ((modm, xK_Left), moveTo Prev NonEmptyWS)
@@ -174,9 +187,11 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Slave windows
     , ((modm .|. shiftMask, xK_Tab), rotSlavesUp)
 
-    -- XMonad
+    -- XMonad control
     , ((modm .|. shiftMask, xK_q), XMonad.io (exitWith ExitSuccess))
     , ((modm, xK_q), XMonad.spawn "xmonad --recompile && xmonad --restart")
+    -- Mouse control
+    , ((modm, xK_b), banish LowerRight)
     ]
     ++
     [((m .|. modm, k), windows $ f i)
