@@ -146,18 +146,22 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_t), withFocused $ windows . W.sink)
 
     -- Floating window movement
-    --
-    -- Note that these bindings shadow bindings for moving windows from
-    -- one workspace to the next
-    -- XXX: why don't these work?
-    , ((modm, xK_Left), withFocused $ snapMove L Nothing)
-    , ((modm, xK_Right), withFocused $ snapMove R Nothing)
-    , ((modm, xK_Up), withFocused $ snapMove U Nothing)
-    , ((modm, xK_Down), withFocused $ snapMove D Nothing)
-    , ((modm .|. shiftMask, xK_Left), withFocused $ snapShrink R Nothing)
-    , ((modm .|. shiftMask, xK_Right), withFocused $ snapGrow R Nothing)
-    , ((modm .|. shiftMask, xK_Up), withFocused $ snapShrink D Nothing)
-    , ((modm .|. shiftMask, xK_Down), withFocused $ snapGrow D Nothing)
+    , ((modm .|. controlMask, xK_Left),
+       withFocused $ snapMove L Nothing)
+    , ((modm .|. controlMask, xK_Right),
+       withFocused $ snapMove R Nothing)
+    , ((modm .|. controlMask, xK_Up),
+       withFocused $ snapMove U Nothing)
+    , ((modm .|. controlMask, xK_Down),
+       withFocused $ snapMove D Nothing)
+    , ((modm .|. controlMask .|. shiftMask, xK_Left),
+       withFocused $ snapShrink R Nothing)
+    , ((modm .|. controlMask .|. shiftMask, xK_Right),
+       withFocused $ snapGrow R Nothing)
+    , ((modm .|. controlMask .|. shiftMask, xK_Up),
+       withFocused $ snapShrink D Nothing)
+    , ((modm .|. controlMask .|. shiftMask, xK_Down),
+       withFocused $ snapGrow D Nothing)
 
     -- Workspaces
     , ((modm, xK_Left), moveTo Prev NonEmptyWS)
