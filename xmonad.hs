@@ -75,8 +75,9 @@ managePlacement = composeOne
 
 manageFloats = composeOne
     [ className =? x -?> doFloat
-                 | x <- [ "Xmessage"
-                          ,"feh"
+                 | x <- [ "Wine"
+		     	, "Xmessage"
+                        , "feh"
                         ]
     ]
 
