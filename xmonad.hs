@@ -2,6 +2,8 @@
 
 module Main (main) where
 
+import XMonad.Action.AvoidMaster
+
 import Data.Bits ((.|.))
 import qualified Data.Map as M
 import System.Exit
