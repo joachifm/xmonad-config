@@ -24,7 +24,9 @@ import XMonad.Actions.Warp
 import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
+import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ShowWName
+import XMonad.Layout.Tabbed
 import XMonad.Hooks.DynamicLog hiding (statusBar)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -58,7 +60,13 @@ config = ewmh $ XMonad.defaultConfig
        , XMonad.keys = keys
        , XMonad.layoutHook = layoutHook
        , XMonad.manageHook = manageHook
+       , XMonad.workspaces = workspaces
        }
+
+------------------------------------------------------------------------------
+
+workspaces = [ "Work", "Terminals", "Web", "Media" ]
+             ++ map show ([5..9] :: [Int])
 
 ------------------------------------------------------------------------------
 
@@ -85,10 +93,9 @@ manageFloats = composeOne
 
 manageMoves = composeOne
     [ className =? x -?> doShift w
-                | (x, w) <- [ ("Emacs", "1")
-                            , ("Firefox", "3")
-                            , ("Sonata", "4")
-                            , ("Qbittorrent", "9")
+                | (x, w) <- [ ("Emacs", "Work")
+                            , ("Firefox", "Web")
+                            , ("Sonata", "Media")
 			    , ("Deluge", "9")
                             ]
     ]
@@ -118,7 +125,7 @@ iconName   = stringProperty "WM_ICON_NAME"
 layoutHook = modifiers layout
     where
         modifiers = showWName . layoutHints . avoidStruts . smartBorders
-        layout = tall ||| Full
+        layout = onWorkspace "Web" simpleTabbed tall ||| Full
 
         tall = Tall nmaster delta ratio
 
