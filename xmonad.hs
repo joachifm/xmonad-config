@@ -22,6 +22,7 @@ import XMonad.Actions.Warp
 import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
+import XMonad.Layout.ShowWName
 import XMonad.Hooks.DynamicLog hiding (statusBar)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -115,7 +116,7 @@ iconName   = stringProperty "WM_ICON_NAME"
 
 layoutHook = modifiers layout
     where
-        modifiers = layoutHints . avoidStruts . smartBorders
+        modifiers = showWName . layoutHints . avoidStruts . smartBorders
         layout = tall ||| Full
 
         tall = Tall nmaster delta ratio
