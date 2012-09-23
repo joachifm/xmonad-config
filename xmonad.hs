@@ -39,7 +39,6 @@ main = XMonad.xmonad =<< statusBar config
 
 ------------------------------------------------------------------------------
 
-statusBar :: XMonad.XConfig l -> IO (XMonad.XConfig l)
 statusBar conf = do
     xmproc <- spawnPipe "xmobar" -- "xmobar ~/.xmobarrc"
     return $ conf { XMonad.logHook = dynamicLogWithPP xmobarPP
