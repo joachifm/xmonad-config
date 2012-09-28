@@ -96,6 +96,8 @@ manageMoves = composeOne
                 | (x, w) <- [ ("Emacs", "Work")
                             , ("Firefox", "Web")
                             , ("Sonata", "Media")
+                            , ("Dolphin", "Media")
+                            , ("Transmission-gtk", "9")
 			    , ("Deluge", "9")
                             ]
     ]
