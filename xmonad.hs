@@ -88,6 +88,7 @@ manageFloats = composeOne
                  | x <- [ "Wine"
 		     	, "Xmessage"
                         , "feh"
+			, "Steam"
                         ]
     ]
 
@@ -97,6 +98,7 @@ manageMoves = composeOne
                             , ("Firefox", "Web")
                             , ("Sonata", "Media")
                             , ("Dolphin", "Media")
+			    , ("Steam", "5")
                             , ("Transmission-gtk", "9")
 			    , ("Deluge", "9")
                             ]
