@@ -96,6 +96,7 @@ manageMoves = composeOne
     [ className =? x -?> doShift w
                 | (x, w) <- [ ("Emacs", "Work")
                             , ("Firefox", "Web")
+                            , ("luakit", "Web")
                             , ("Sonata", "Media")
                             , ("Dolphin", "Media")
 			    , ("Steam", "5")
