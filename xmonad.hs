@@ -65,7 +65,7 @@ config = ewmh $ XMonad.defaultConfig
 
 ------------------------------------------------------------------------------
 
-workspaces = [ "Work", "Terminals", "Web", "Media" ]
+workspaces = [ "Work", "Terminals", "Web", "Media", "Games" ]
              ++ map show ([5..9] :: [Int])
 
 ------------------------------------------------------------------------------
@@ -88,7 +88,6 @@ manageFloats = composeOne
                  | x <- [ "Wine"
 		     	, "Xmessage"
                         , "feh"
-			, "Steam"
                         ]
     ]
 
@@ -99,7 +98,8 @@ manageMoves = composeOne
                             , ("luakit", "Web")
                             , ("Sonata", "Media")
                             , ("Dolphin", "Media")
-			    , ("Steam", "5")
+			    , ("Steam", "Games")
+			    , ("Calibre-gui", "6")
                             , ("Transmission-gtk", "9")
 			    , ("Deluge", "9")
                             ]
