@@ -116,7 +116,7 @@ iconName   = stringProperty "WM_ICON_NAME"
 layoutHook = modifiers layout
     where
         modifiers = showWName . layoutHints . avoidStruts . smartBorders
-        layout = onWorkspace "Web" simpleTabbed tall ||| Full
+        layout = onWorkspace "Games" Full (onWorkspace "Web" simpleTabbed tall) ||| Full
 
         tall = Tall nmaster delta ratio
 
