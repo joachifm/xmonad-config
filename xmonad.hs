@@ -39,7 +39,8 @@ import XMonad.Util.Run
 ------------------------------------------------------------------------------
 
 main :: IO ()
-main = XMonad.xmonad =<< statusBar config
+--main = XMonad.xmonad =<< statusBar config
+main = XMonad.xmonad config
 
 ------------------------------------------------------------------------------
 
