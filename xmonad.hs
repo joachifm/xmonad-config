@@ -86,7 +86,7 @@ managePlacement = composeOne
 manageFloats = composeOne
     [ className =? x -?> doFloat
                  | x <- [ "Wine"
-		     	, "Xmessage"
+                        , "Xmessage"
                         , "feh"
                         ]
     ]
@@ -100,7 +100,7 @@ manageMoves = composeOne
                             , ("Dolphin", "Media")
 			    , ("Steam", "Games")
 			    , ("Calibre-gui", "6")
-                            , ("Transmission-gtk", "9")
+          , ("Transmission-gtk", "9")
 			    , ("Deluge", "9")
                             ]
     ]
