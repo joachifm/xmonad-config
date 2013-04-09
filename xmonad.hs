@@ -103,6 +103,7 @@ manageMoves = composeOne
 			    , ("Calibre-gui", "6")
           , ("Transmission-gtk", "9")
 			    , ("Deluge", "9")
+          , ("Bitcoin-qt", "9")
                             ]
     ]
 
