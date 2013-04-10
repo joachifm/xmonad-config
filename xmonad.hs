@@ -104,6 +104,7 @@ manageMoves = composeOne
           , ("Transmission-gtk", "9")
 			    , ("Deluge", "9")
           , ("Bitcoin-qt", "9")
+          , ("Vidalia", "9")
                             ]
     ]
 
