@@ -101,12 +101,12 @@ manageMoves = composeOne
                             , ("Dolphin", "Media")
 			    , ("Steam", "Games")
 			    , ("Calibre-gui", "6")
-          , ("Transmission-gtk", "9")
-			    , ("Deluge", "9")
-          , ("Bitcoin-qt", "9")
-          , ("Vidalia", "9")
+                            , ("Transmission-gtk", "9")
+                            , ("Deluge", "9")
+                            , ("Bitcoin-qt", "9")
+                            , ("Vidalia", "9")
                             ]
-    ]
+                ]
 
 {- Window property helpers
 windowRole = stringProperty "WM_WINDOW_ROLE"
