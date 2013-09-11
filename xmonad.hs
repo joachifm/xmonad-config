@@ -140,6 +140,10 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
         runOrRaise "firefox" (className =? "Firefox"))
     , ((modm .|. shiftMask, xK_e),
        runOrRaise "edit-server" (className =? "Emacs"))
+    , ((modm .|. controlMask, xK_h),
+       runOrRaise "keepassx" (className =? "Keepassx"))
+    , ((modm .|. controlMask, xK_k),
+       XMonad.spawn "xvkbd")
 
     -- Window management
     , ((modm, xK_w), goToSelected defaultGSConfig)
