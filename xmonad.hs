@@ -27,34 +27,21 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ShowWName
 import XMonad.Layout.Tabbed
-import XMonad.Hooks.DynamicLog hiding (statusBar)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
 import XMonad.Prompt
 import XMonad.Prompt.Shell
-import XMonad.Util.Run
 
 ------------------------------------------------------------------------------
 
 main :: IO ()
---main = XMonad.xmonad =<< statusBar config
 main = XMonad.xmonad config
 
 ------------------------------------------------------------------------------
 
-statusBar conf = do
-    xmproc <- spawnPipe "xmobar" -- "xmobar ~/.xmobarrc"
-    return $ conf { XMonad.logHook = dynamicLogWithPP xmobarPP
-                    { ppOutput = hPutStrLn xmproc
-                    , ppTitle  = xmobarColor "green" "" . shorten 50
-                    }
-                  }
-
-------------------------------------------------------------------------------
-
-config = ewmh $ XMonad.defaultConfig
+config = XMonad.defaultConfig
        { XMonad.terminal = "urxvt"
        , XMonad.modMask = XMonad.mod4Mask
        , XMonad.focusFollowsMouse = False
@@ -71,48 +58,21 @@ workspaces = [ "Work", "Terminals", "Web", "Media", "Games" ]
 
 ------------------------------------------------------------------------------
 
-manageHook = managePlacement
-         <+> manageMoves
-         <+> manageFloats
-         <+> manageDocks
-         <+> manageFocus
-         <+> (isFullscreen --> doFullFloat)
-         <+> XMonad.manageHook XMonad.defaultConfig
+manageHook = composeAll [
+    checkDock               --> doIgnore
+  , isDialog                --> doFloat
+  , isFullscreen            --> doFullFloat
 
-managePlacement = composeOne
-    [ className =? x -?> placeHook (fixed (1,1)) -- place in the bottom-right corner
-                 | x <- [ "MPlayer" ]
-    ]
+  , className =? "MPlayer"  --> doFloat
+  , className =? "MPlayer"  --> placeHook (fixed (1,1))
+  , className =? "feh"      --> doFloat
+  , className =? "Wine"     --> doFloat
+  , className =? "Emacs"    --> doShift "Work"
+  , className =? "Firefox"  --> doShift "Web"
+  , className =? "Keepassx" --> doShift "8"
 
-manageFloats = composeOne
-    [ className =? x -?> doFloat
-                 | x <- [ "Wine"
-                        , "Xmessage"
-                        , "feh"
-                        ]
-    ]
-
-manageMoves = composeOne
-    [ className =? x -?> doShift w
-                | (x, w) <- [ ("Emacs", "Work")
-                            , ("Firefox", "Web")
-                            , ("luakit", "Web")
-                            , ("Sonata", "Media")
-                            , ("Dolphin", "Media")
-			    , ("Steam", "Games")
-			    , ("Calibre-gui", "6")
-                            , ("Transmission-gtk", "9")
-                            , ("Deluge", "9")
-                            , ("Bitcoin-qt", "9")
-                            , ("Vidalia", "9")
-                            ]
-                ]
-
-{- Window property helpers
-windowRole = stringProperty "WM_WINDOW_ROLE"
-windowName = stringProperty "WM_NAME"
-iconName   = stringProperty "WM_ICON_NAME"
--}
+  , return True             --> doF avoidMaster
+  ]
 
 ------------------------------------------------------------------------------
 
