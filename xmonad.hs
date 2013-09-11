@@ -197,6 +197,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     -- XMonad control
     , ((modm .|. shiftMask, xK_q), XMonad.io (exitWith ExitSuccess))
     , ((modm, xK_q), XMonad.spawn "xmonad --recompile && xmonad --restart")
+
     -- Mouse control
     , ((modm, xK_b), banish LowerRight)
     ]
