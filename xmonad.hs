@@ -59,18 +59,19 @@ workspaces = [ "Work", "Terminals", "Web", "Media", "Games" ]
 ------------------------------------------------------------------------------
 
 manageHook = composeAll [
-    checkDock               --> doIgnore
-  , isDialog                --> doFloat
-  , isFullscreen            --> doFullFloat
+    checkDock                --> doIgnore
+  , isDialog                 --> doFloat
+  , isFullscreen             --> doFullFloat
 
-  , className =? "MPlayer"  --> doFloat
-  , className =? "MPlayer"  --> placeHook (fixed (1,1))
-  , className =? "feh"      --> doFloat
-  , className =? "Wine"     --> doFloat
-  , className =? "Emacs"    --> doShift "Work"
-  , className =? "Firefox"  --> doShift "Web"
-  , className =? "Keepassx" --> doShift "8"
-  , className =? "Wuala"    --> doShift "9"
+  , className =? "MPlayer"   --> doFloat
+  , className =? "MPlayer"   --> placeHook (fixed (1,1))
+  , className =? "feh"       --> doFloat
+  , className =? "Wine"      --> doFloat
+  , className =? "Emacs"     --> doShift "Work"
+  , className =? "Firefox"   --> doShift "Web"
+  , className =? "Quodlibet" --> doShift "Media"
+  , className =? "Keepassx"  --> doShift "8"
+  , className =? "Wuala"     --> doShift "9"
 
   , return True             --> doF avoidMaster
   ]
