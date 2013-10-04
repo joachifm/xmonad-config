@@ -92,7 +92,7 @@ layoutHook = modifiers layout
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), XMonad.spawn $ XMonad.terminal conf)
     , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
-    , ((modm, xK_p), XMonad.spawn "dmenu_run")
+    , ((modm, xK_p), XMonad.spawn "SHELL=/usr/bin/dash /usr/bin/dmenu_run")
     , ((modm, xK_x), shellPrompt defaultXPConfig)
     , ((modm, xK_l), XMonad.spawn "xlock")
     , ((modm, xK_g), XMonad.spawn "urxvt -e ghci")
