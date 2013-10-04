@@ -70,6 +70,7 @@ manageHook = composeAll [
   , className =? "Emacs"    --> doShift "Work"
   , className =? "Firefox"  --> doShift "Web"
   , className =? "Keepassx" --> doShift "8"
+  , className =? "Wuala"    --> doShift "9"
 
   , return True             --> doF avoidMaster
   ]
