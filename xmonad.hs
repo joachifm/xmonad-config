@@ -63,16 +63,28 @@ manageHook = composeAll [
   , isDialog                 --> doFloat
   , isFullscreen             --> doFullFloat
 
-  , className =? "MPlayer"   --> doFloat
-  , className =? "MPlayer"   --> placeHook (fixed (1,1))
-  , className =? "feh"       --> doFloat
-  , className =? "Wine"      --> doFloat
-  , className =? "Emacs"     --> doShift "Work"
-  , className =? "Firefox"   --> doShift "Web"
-  , className =? "Quodlibet" --> doShift "Media"
-  , className =? "Keepassx"  --> doShift "8"
-  , className =? "Wuala"     --> doShift "9"
+    -- Assign clients to specific work spaces
+  , composeOne [ className =? x -?> doShift w
+                 | (x, w) <- [ ("Emacs", "Work")
+                             , ("Firefox", "Web")
+                             , ("Keepassx", "8")
+                             , ("Wuala", "9")
+                             ]
+               ]
 
+    -- Floating clients
+  , composeOne [ className =? x -?> doFloat
+                 | x <- [ "MPlayer", "mpv", "feh", "Wine" ]
+               ]
+
+    -- Place video output in the lower right corner
+  , composeOne [ className =? x -?> placeHook p
+                 | (x, p) <- [ ("MPlayer", fixed (1,1))
+                             , ("mpv", fixed (1,1))
+                             ]
+               ]
+
+    -- All clients must submit to the master
   , return True             --> doF avoidMaster
   ]
 
