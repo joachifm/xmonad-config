@@ -33,6 +33,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
 import XMonad.Prompt
 import XMonad.Prompt.Shell
+import XMonad.Util.Run (safeSpawn)
 
 ------------------------------------------------------------------------------
 
@@ -104,20 +105,19 @@ layoutHook = modifiers layout
 ------------------------------------------------------------------------------
 
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm .|. shiftMask, xK_Return), XMonad.spawn $ XMonad.terminal conf)
+    [ ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
     , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
     , ((modm, xK_p), XMonad.spawn "SHELL=/usr/bin/dash /usr/bin/dmenu_run")
     , ((modm, xK_x), shellPrompt defaultXPConfig)
-    , ((modm, xK_l), XMonad.spawn "xlock")
-    , ((modm, xK_g), XMonad.spawn "urxvt -e ghci")
+    , ((modm, xK_l), safeSpawn "xlock" [])
+    , ((modm, xK_g), safeSpawn "urxvt -e ghci" [])
     , ((modm .|. shiftMask, xK_b),
         runOrRaise "firefox" (className =? "Firefox"))
     , ((modm .|. shiftMask, xK_e),
        runOrRaise "edit-server" (className =? "Emacs"))
     , ((modm .|. controlMask, xK_h),
        runOrRaise "keepassx" (className =? "Keepassx"))
-    , ((modm .|. controlMask, xK_k),
-       XMonad.spawn "xvkbd")
+    , ((modm .|. controlMask, xK_k), safeSpawn "xvkbd" [])
 
     -- Window management
     , ((modm, xK_w), goToSelected defaultGSConfig)
