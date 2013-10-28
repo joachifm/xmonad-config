@@ -61,8 +61,13 @@ workspaces = [ "Work", "Terminals", "Web", "Media", "Games" ]
 
 manageHook = composeAll [
     checkDock                --> doIgnore
-  , isDialog                 --> doFloat
-  , isFullscreen             --> doFullFloat
+
+    -- All clients must submit to master, except dialogs (to avoid flickering
+    -- and general weirdnes
+  , composeOne [ isDialog     -?> doFloat
+               , isFullscreen -?> doFullFloat
+               , return True  -?> doF avoidMaster
+               ]
 
     -- Assign clients to specific work spaces
   , composeOne [ className =? x -?> doShift w
@@ -84,9 +89,6 @@ manageHook = composeAll [
                              , ("mpv", fixed (1,1))
                              ]
                ]
-
-    -- All clients must submit to the master
-  , return True             --> doF avoidMaster
   ]
 
 ------------------------------------------------------------------------------
