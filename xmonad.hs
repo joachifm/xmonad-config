@@ -41,7 +41,7 @@ main = XMonad.xmonad config
 
 ------------------------------------------------------------------------------
 
-config = XMonad.defaultConfig
+config = def
        { XMonad.terminal = "urxvt"
        , XMonad.modMask = XMonad.mod4Mask
        , XMonad.focusFollowsMouse = False
@@ -109,7 +109,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
     , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
     , ((modm, xK_p), XMonad.spawn "SHELL=/usr/bin/dash /usr/bin/dmenu_run")
-    , ((modm, xK_x), shellPrompt defaultXPConfig)
+    , ((modm, xK_x), shellPrompt def)
     , ((modm, xK_l), safeSpawn "xlock" [])
     , ((modm, xK_g), safeSpawn "urxvt -e ghci" [])
     , ((modm .|. shiftMask, xK_b),
@@ -121,7 +121,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask, xK_k), safeSpawn "xvkbd" [])
 
     -- Window management
-    , ((modm, xK_w), goToSelected defaultGSConfig)
+    , ((modm, xK_w), goToSelected def)
     , ((modm, xK_s), windows copyToAll)
     , ((modm .|. shiftMask, xK_c), kill1)
     , ((modm .|. shiftMask, xK_s), killAllOtherCopies)
