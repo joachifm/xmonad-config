@@ -30,7 +30,6 @@ import XMonad.Layout.Tabbed
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
-import XMonad.Prompt
 import XMonad.Prompt.Shell
 import XMonad.Util.Run (safeSpawn)
 
