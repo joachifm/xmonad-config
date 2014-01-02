@@ -135,6 +135,8 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
        withFocused $ snapMove U Nothing)
     , ((modm .|. controlMask, xK_Down),
        withFocused $ snapMove D Nothing)
+
+      {- Does not seem to work
     , ((modm .|. controlMask .|. shiftMask, xK_Left),
        withFocused $ snapShrink R Nothing)
     , ((modm .|. controlMask .|. shiftMask, xK_Right),
@@ -143,6 +145,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
        withFocused $ snapShrink D Nothing)
     , ((modm .|. controlMask .|. shiftMask, xK_Down),
        withFocused $ snapGrow D Nothing)
+      -}
 
     -- Workspaces
     , ((modm, xK_Left), moveTo Prev NonEmptyWS)
