@@ -71,6 +71,7 @@ manageHook = composeAll [
   , composeOne [ className =? x -?> doShift w
                  | (x, w) <- [ ("Emacs", "Work")
                              , ("Firefox", "Web")
+                             , ("Steam", "Games")
                              , ("Keepassx", "8")
                              , ("Wuala", "9")
                              ]
