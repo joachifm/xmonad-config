@@ -79,13 +79,12 @@ manageHook = composeAll [
 
     -- Floating clients
   , composeOne [ className =? x -?> doFloat
-                 | x <- [ "MPlayer", "mpv", "feh", "Wine", "Steam" ]
+                 | x <- [ "mpv", "feh", "Wine" ]
                ]
 
     -- Place video output in the lower right corner
   , composeOne [ className =? x -?> placeHook p
-                 | (x, p) <- [ ("MPlayer", fixed (1,1))
-                             , ("mpv", fixed (1,1))
+                 | (x, p) <- [ ("mpv", fixed (1,1))
                              ]
                ]
   ]
