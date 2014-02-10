@@ -24,9 +24,7 @@ import XMonad.Actions.Warp
 import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
-import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ShowWName
-import XMonad.Layout.Tabbed
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
@@ -52,8 +50,8 @@ config = def
 
 ------------------------------------------------------------------------------
 
-workspaces = [ "Work", "Terminals", "Web", "Media", "Games" ]
-             ++ map show ([6..9] :: [Int])
+workspaces = [ "Work", "Terminals", "Web", "Media", "IM", "VM" ]
+           ++ map show ([7..9]::[Int])
 
 ------------------------------------------------------------------------------
 
@@ -71,9 +69,9 @@ manageHook = composeAll [
   , composeOne [ className =? x -?> doShift w
                  | (x, w) <- [ ("Emacs", "Work")
                              , ("Firefox", "Web")
-                             , ("Steam", "Games")
-                             , ("Keepassx", "8")
-                             , ("Wuala", "9")
+                             , ("VirtualBox", "VM")
+                             , ("Pidgin", "IM")
+                             , ("Keepassx", "7")
                              ]
                ]
 
@@ -94,13 +92,15 @@ manageHook = composeAll [
 layoutHook = modifiers layout
     where
         modifiers = showWName . layoutHints . avoidStruts . smartBorders
-        layout = onWorkspace "Games" Full (onWorkspace "Web" simpleTabbed tall) ||| Full
+
+        layout = Full ||| tall ||| wide
 
         tall = Tall nmaster delta ratio
+        wide = Mirror tall
 
         nmaster = 1
-        ratio = 1/2
-        delta = 3/100
+        ratio   = 1/2
+        delta   = 3/100
 
 ------------------------------------------------------------------------------
 
@@ -110,10 +110,11 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_p), XMonad.spawn "SHELL=/usr/bin/dash /usr/bin/dmenu_run")
     , ((modm, xK_x), shellPrompt def)
     , ((modm, xK_l), safeSpawn "xlock" [])
-    , ((modm, xK_g), safeSpawn "urxvt -e ghci" [])
-    , ((modm .|. shiftMask, xK_b),
+
+      -- Application hotkeys
+    , ((modm .|. controlMask, xK_b),
         runOrRaise "firefox" (className =? "Firefox"))
-    , ((modm .|. shiftMask, xK_e),
+    , ((modm .|. controlMask, xK_e),
        runOrRaise "edit-server" (className =? "Emacs"))
     , ((modm .|. controlMask, xK_h),
        runOrRaise "keepassx" (className =? "Keepassx"))
