@@ -107,7 +107,7 @@ layoutHook = modifiers layout
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
     , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
-    , ((modm, xK_p), XMonad.spawn "SHELL=/usr/bin/dash /usr/bin/dmenu_run")
+    , ((modm, xK_p), XMonad.spawn "SHELL=/usr/bin/dash /usr/bin/cgexec -g cpu,memory:users/apps /usr/bin/dmenu_run")
     , ((modm, xK_x), shellPrompt def)
     , ((modm, xK_l), safeSpawn "xlock" [])
 
