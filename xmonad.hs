@@ -28,6 +28,7 @@ import XMonad.Layout.ShowWName
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
+import XMonad.Prompt
 import XMonad.Prompt.Shell
 import XMonad.Util.Run (safeSpawn)
 
@@ -38,8 +39,8 @@ main = XMonad.xmonad config
 
 ------------------------------------------------------------------------------
 
-config = def
-       { XMonad.terminal = "urxvt"
+config = XMonad.defaultConfig
+       { XMonad.terminal = "xterm"
        , XMonad.modMask = XMonad.mod4Mask
        , XMonad.focusFollowsMouse = False
        , XMonad.keys = keys
@@ -107,8 +108,8 @@ layoutHook = modifiers layout
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
     , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
-    , ((modm, xK_p), XMonad.spawn "SHELL=/usr/bin/dash /usr/bin/cgexec -g cpu,memory:users/apps /usr/bin/dmenu_run")
-    , ((modm, xK_x), shellPrompt def)
+    , ((modm, xK_p), XMonad.spawn "dmenu_run")
+    , ((modm, xK_x), shellPrompt defaultXPConfig)
     , ((modm, xK_l), safeSpawn "xlock" [])
 
       -- Application hotkeys
@@ -121,7 +122,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask, xK_k), safeSpawn "xvkbd" [])
 
     -- Window management
-    , ((modm, xK_w), goToSelected def)
+    , ((modm, xK_w), goToSelected defaultGSConfig)
     , ((modm, xK_s), windows copyToAll)
     , ((modm .|. shiftMask, xK_s), killAllOtherCopies) -- undo copyToAll
     , ((modm .|. shiftMask, xK_c), kill1)
