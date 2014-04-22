@@ -116,7 +116,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask, xK_b),
         runOrRaise "firefox" (className =? "Firefox"))
     , ((modm .|. controlMask, xK_e),
-       runOrRaise "emacs -f server-mode" (className =? "Emacs"))
+       runOrRaise "emacs" (className =? "Emacs"))
     , ((modm .|. controlMask, xK_k), safeSpawn "xvkbd" [])
 
     -- Window management
