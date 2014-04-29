@@ -3,7 +3,7 @@ Prevent new windows from spawning in the master pane.
 Source: <http://ruderich.org/simon/config/xmonad>
 -}
 
-module XMonad.Action.AvoidMaster
+module XMonad.Actions.AvoidMaster
    ( manageFocus
    , avoidMaster
    ) where
