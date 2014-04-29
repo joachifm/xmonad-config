@@ -114,7 +114,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
 
       -- Application hotkeys
     , ((modm .|. controlMask, xK_b),
-        runOrRaise "firefox" (className =? "Firefox"))
+        runOrRaise "dwb" (className =? ".dwb-wrapped"))
     , ((modm .|. controlMask, xK_e),
        runOrRaise "emacs" (className =? "Emacs"))
     , ((modm .|. controlMask, xK_k), safeSpawn "xvkbd" [])
