@@ -51,16 +51,14 @@ config = XMonad.defaultConfig
 
 ------------------------------------------------------------------------------
 
-workspaces = [ "Work", "Terminals", "Web", "Media", "IM", "VM" ]
-           ++ map show ([7..9]::[Int])
+workspaces = [ "Work", "Term", "Web" ] ++ map show ([4..9]::[Int])
 
 ------------------------------------------------------------------------------
 
 manageHook = composeAll [
     checkDock                --> doIgnore
 
-    -- All clients must submit to master, except dialogs (to avoid flickering
-    -- and general weirdnes
+    -- All clients except for dialogs submit to master
   , composeOne [ isDialog     -?> doFloat
                , isFullscreen -?> doFullFloat
                , return True  -?> doF avoidMaster
@@ -69,10 +67,8 @@ manageHook = composeAll [
     -- Assign clients to specific work spaces
   , composeOne [ className =? x -?> doShift w
                  | (x, w) <- [ ("Emacs", "Work")
+                             , (".dwb-wrapped", "Web")
                              , ("Firefox", "Web")
-                             , ("VirtualBox", "VM")
-                             , ("Pidgin", "IM")
-                             , ("Keepassx", "7")
                              ]
                ]
 
