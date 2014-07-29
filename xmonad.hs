@@ -110,7 +110,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
 
       -- Application hotkeys
     , ((modm .|. controlMask, xK_b),
-        runOrRaise "dwb" (className =? ".dwb-wrapped"))
+        XMonad.spawn "url=$(echo -n | dmenu); surf -c /dev/null -nip $url")
     , ((modm .|. controlMask, xK_e),
        runOrRaise "emacs" (className =? "Emacs"))
     , ((modm .|. controlMask, xK_k), safeSpawn "xvkbd" [])
