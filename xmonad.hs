@@ -109,8 +109,10 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_l), safeSpawn "xlock" [])
 
       -- Application hotkeys
-    , ((modm .|. controlMask, xK_b),
+    , ((modm .|. controlMask .|. shiftMask, xK_b),
         XMonad.spawn "url=$(echo -n | dmenu); surf -c /dev/null -nip $url")
+    , ((modm .|. controlMask, xK_b),
+       runOrRaise "dwb" (className =? ".dwb-wrapped"))
     , ((modm .|. controlMask, xK_e),
        runOrRaise "emacs" (className =? "Emacs"))
     , ((modm .|. controlMask, xK_k), safeSpawn "xvkbd" [])
