@@ -67,8 +67,7 @@ manageHook = composeAll [
     -- Assign clients to specific work spaces
   , composeOne [ className =? x -?> doShift w
                  | (x, w) <- [ ("Emacs", "Work")
-                             , (".dwb-wrapped", "Web")
-                             , ("Firefox", "Web")
+                             , ("Surf", "Web")
                              ]
                ]
 
@@ -110,9 +109,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
 
       -- Application hotkeys
     , ((modm .|. controlMask .|. shiftMask, xK_b),
-        XMonad.spawn "url=$(echo -n | dmenu); surf -c /dev/null -nip $url")
-    , ((modm .|. controlMask, xK_b),
-       runOrRaise "dwb" (className =? ".dwb-wrapped"))
+        XMonad.spawn "url=$(grep -v '^#' $HOME/.config/surfraw/bookmarks | cut -d ' ' -f1 | dmenu); surfraw $url")
     , ((modm .|. controlMask, xK_e),
        runOrRaise "agenda-server.sh" (className =? "Emacs"))
     , ((modm .|. controlMask, xK_k), safeSpawn "xvkbd" [])
