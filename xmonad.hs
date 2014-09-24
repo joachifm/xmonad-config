@@ -114,7 +114,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask, xK_b),
        runOrRaise "dwb" (className =? ".dwb-wrapped"))
     , ((modm .|. controlMask, xK_e),
-       runOrRaise "emacs" (className =? "Emacs"))
+       runOrRaise "agenda-server.sh" (className =? "Emacs"))
     , ((modm .|. controlMask, xK_k), safeSpawn "xvkbd" [])
 
     -- Window management
