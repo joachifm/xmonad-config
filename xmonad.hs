@@ -67,19 +67,13 @@ manageHook = composeAll [
     -- Assign clients to specific work spaces
   , composeOne [ className =? x -?> doShift w
                  | (x, w) <- [ ("Emacs", "Work")
-                             , ("Surf", "Web")
+                             , ("Firefox", "Web")
                              ]
                ]
 
     -- Floating clients
   , composeOne [ className =? x -?> doFloat
                  | x <- [ "mpv" ]
-               ]
-
-    -- Place video output in the lower right corner
-  , composeOne [ className =? x -?> placeHook p
-                 | (x, p) <- [ ("mpv", fixed (1,1))
-                             ]
                ]
   ]
 
@@ -108,11 +102,10 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_l), safeSpawn "xlock" [])
 
       -- Application hotkeys
-    , ((modm .|. controlMask .|. shiftMask, xK_b),
-        XMonad.spawn "url=$(grep -v '^#' $HOME/.config/surfraw/bookmarks | cut -d ' ' -f1 | dmenu); surfraw $url")
+    , ((modm .|. controlMask, xK_b),
+       runOrRaise "firefox" (className =? "Firefox"))
     , ((modm .|. controlMask, xK_e),
-       runOrRaise "agenda-server.sh" (className =? "Emacs"))
-    , ((modm .|. controlMask, xK_k), safeSpawn "xvkbd" [])
+       runOrRaise "emacs" (className =? "Emacs"))
 
     -- Window management
     , ((modm, xK_w), goToSelected defaultGSConfig)
