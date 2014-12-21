@@ -6,8 +6,8 @@ import XMonad.Actions.AvoidMaster
 
 import Data.Bits ((.|.))
 import qualified Data.Map as M
-import System.Exit
 import Graphics.X11.Xlib
+import System.Exit
 
 import qualified XMonad
 import qualified XMonad.StackSet as W
@@ -82,7 +82,10 @@ manageHook = composeAll [
 
 layoutHook = modifiers layout
     where
-        modifiers = showWName . layoutHints . avoidStruts . smartBorders
+        modifiers = showWName
+                  . layoutHints
+                  . avoidStruts
+                  . smartBorders
 
         layout = Full ||| tall ||| wide
 
@@ -106,7 +109,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask, xK_b),
        runOrRaise "firefox" (className =? "Firefox"))
     , ((modm .|. controlMask, xK_e),
-       runOrRaise "emacs" (className =? "Emacs"))
+       runOrRaise "pim" (className =? "Emacs"))
 
     -- Window management
     , ((modm, xK_w), goToSelected defaultGSConfig)
