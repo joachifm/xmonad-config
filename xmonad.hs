@@ -25,6 +25,7 @@ import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ShowWName
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
@@ -35,7 +36,7 @@ import XMonad.Util.Run (safeSpawn)
 ------------------------------------------------------------------------------
 
 main :: IO ()
-main = XMonad.xmonad config
+main = XMonad.xmonad (ewmh config)
 
 ------------------------------------------------------------------------------
 
