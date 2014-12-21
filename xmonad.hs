@@ -126,10 +126,10 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
        withFocused $ snapMove D Nothing)
 
     -- Workspaces
-    , ((modm, xK_Left), moveTo Prev NonEmptyWS)
-    , ((modm, xK_Right), moveTo Next NonEmptyWS)
-    , ((modm .|. shiftMask, xK_Left), shiftToPrev >> prevWS)
-    , ((modm .|. shiftMask, xK_Right), shiftToNext >> nextWS)
+    , ((modm, xK_l), moveTo Prev NonEmptyWS)
+    , ((modm, xK_h), moveTo Next NonEmptyWS)
+    , ((modm .|. shiftMask, xK_l), shiftToPrev >> prevWS)
+    , ((modm .|. shiftMask, xK_h), shiftToNext >> nextWS)
 
     -- Layouts
     , ((modm, xK_space), sendMessage XMonad.NextLayout)
