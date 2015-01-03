@@ -103,13 +103,14 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_d), XMonad.spawn "(date '+%Y-%m-%d %T'; sleep 1) | dzen2")
     , ((modm, xK_p), XMonad.spawn "dmenu_run")
     , ((modm, xK_x), shellPrompt defaultXPConfig)
-    , ((modm, xK_l), safeSpawn "xlock" [])
 
       -- Application hotkeys
+    , ((modm .|. controlMask, xK_l),
+       safeSpawn "xlock" [])
     , ((modm .|. controlMask, xK_b),
        runOrRaise "firefox" (className =? "Firefox"))
     , ((modm .|. controlMask, xK_e),
-       runOrRaise "pim" (className =? "Emacs"))
+       runOrRaise "emacs" (className =? "Emacs"))
 
     -- Window management
     , ((modm, xK_w), goToSelected defaultGSConfig)
@@ -129,10 +130,10 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
        withFocused $ snapMove D Nothing)
 
     -- Workspaces
-    , ((modm, xK_l), moveTo Prev NonEmptyWS)
-    , ((modm, xK_h), moveTo Next NonEmptyWS)
-    , ((modm .|. shiftMask, xK_l), shiftToPrev >> prevWS)
-    , ((modm .|. shiftMask, xK_h), shiftToNext >> nextWS)
+    , ((modm, xK_h), moveTo Prev NonEmptyWS)
+    , ((modm, xK_l), moveTo Next NonEmptyWS)
+    , ((modm .|. shiftMask, xK_h), shiftToPrev >> prevWS)
+    , ((modm .|. shiftMask, xK_l), shiftToNext >> nextWS)
 
     -- Layouts
     , ((modm, xK_space), sendMessage XMonad.NextLayout)
