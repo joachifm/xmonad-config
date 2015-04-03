@@ -108,9 +108,9 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask, xK_l),
        safeSpawn "xlock" [])
     , ((modm .|. controlMask, xK_b),
-       runOrRaise "firefox" (className =? "Firefox"))
+       runOrRaise "systemctl --user start firefox@joachifm" (className =? "Firefox"))
     , ((modm .|. controlMask, xK_e),
-       runOrRaise "emacs" (className =? "Emacs"))
+       runOrRaise "systemctl --user start emacs" (className =? "Emacs"))
 
     -- Window management
     , ((modm, xK_w), goToSelected defaultGSConfig)
