@@ -41,7 +41,7 @@ main = XMonad.xmonad (ewmh config)
 ------------------------------------------------------------------------------
 
 config = XMonad.defaultConfig
-       { XMonad.terminal = "xterm"
+       { XMonad.terminal = "urxvt"
        , XMonad.modMask = XMonad.mod4Mask
        , XMonad.focusFollowsMouse = False
        , XMonad.keys = keys
