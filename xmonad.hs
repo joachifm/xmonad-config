@@ -2,6 +2,8 @@
 
 module Main (main) where
 
+import Data.Default (def)
+
 import Data.Bits ((.|.))
 import qualified Data.Map as M
 import Graphics.X11.Xlib
@@ -33,8 +35,8 @@ main = XMonad.xmonad (ewmh config)
 
 ------------------------------------------------------------------------------
 
-config = XMonad.defaultConfig
-       { XMonad.terminal = "urxvt"
+config = def
+       { XMonad.terminal = "xterm"
        , XMonad.modMask = XMonad.mod4Mask
        , XMonad.focusFollowsMouse = False
        , XMonad.keys = keys
@@ -81,7 +83,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
 
   -- Window management
-  , ((modm, xK_w), goToSelected defaultGSConfig)
+  , ((modm, xK_w), goToSelected def)
   , ((modm .|. shiftMask, xK_c), kill1)
 
   -- Workspaces
