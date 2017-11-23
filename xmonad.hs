@@ -81,6 +81,7 @@ layoutHook = smartBorders Full
 
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
+   ,((modm, xK_p), safeSpawn "dmenu_run" [])
 
   -- Window management
   , ((modm, xK_w), goToSelected def)
