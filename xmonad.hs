@@ -9,6 +9,7 @@ import qualified Data.Map as M
 import Graphics.X11.Xlib
 import System.Exit
 
+import XMonad (X)
 import qualified XMonad
 import qualified XMonad.StackSet as W
 import XMonad.Layout
@@ -27,6 +28,12 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Util.Run (safeSpawn)
+import XMonad.Actions.Commands
+
+------------------------------------------------------------------------------
+
+commands :: X [(String, X ())]
+commands = defaultCommands
 
 ------------------------------------------------------------------------------
 
@@ -79,6 +86,7 @@ layoutHook = smartBorders Full
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
    ,((modm, xK_p), safeSpawn "dmenu_run" [])
+   ,((modm .|. controlMask, xK_y), commands >>= runCommand)
 
   -- Window management
   , ((modm, xK_w), goToSelected def)
