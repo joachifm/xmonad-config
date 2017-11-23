@@ -60,18 +60,15 @@ manageHook = composeAll [
                ]
 
     -- Assign clients to specific work spaces
-  , composeOne [ className =? x -?> doShift w
-                 | (x, w) <- [ ("Emacs", "Edit")
-                             , ("Firefox", "Web")
-                             , ("Pidgin", "IM")
-                             ]
+  , composeOne [ p =? x -?> doShift w
+                 | (p, x, w) <- [ (className, "Emacs", "Edit")
+                                , (className, "Firefox", "Web")
+                                ]
                ]
 
     -- Floating clients
-  , composeOne [ className =? x -?> doFloat | x <- floatingClients ]
+  , composeOne [ className =? x -?> doFloat | x <- [ "mpv" ] ]
   ]
-
-floatingClients = [ "mpv" ]
 
 ------------------------------------------------------------------------------
 
