@@ -86,7 +86,8 @@ layoutHook = smartBorders Full
 
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
-   ,((modm, xK_p), safeSpawn "dmenu_run" [])
+  , ((modm, xK_p), safeSpawn "dmenu_run" [])
+
   -- Group navigation
   , ((modm, xK_comma), nextMatchWithThis Forward  className)
   , ((modm, xK_period), nextMatchWithThis Backward className)
