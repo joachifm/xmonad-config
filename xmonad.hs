@@ -20,7 +20,6 @@ import XMonad.Actions.Commands
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
-import XMonad.Actions.RotSlaves
 import XMonad.Actions.Warp
 import XMonad.Actions.WindowGo
 import XMonad.Layout.LayoutHints
@@ -116,9 +115,6 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $ [
   , ((modm, xK_Return), windows W.swapMaster)
   , ((modm .|. shiftMask, xK_k), windows W.swapUp)
   , ((modm .|. shiftMask, xK_j), windows W.swapDown)
-
-  -- Slave windows
-  , ((modm .|. shiftMask, xK_Tab), rotSlavesUp)
 
   -- XMonad control
   , ((modm .|. controlMask, xK_y), commands >>= runCommand)
