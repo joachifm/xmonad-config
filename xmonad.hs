@@ -16,6 +16,7 @@ import XMonad.Layout
 import XMonad.ManageHook
 import XMonad.Operations
 
+import XMonad.Actions.Commands
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
@@ -28,7 +29,6 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Util.Run (safeSpawn)
-import XMonad.Actions.Commands
 import XMonad.Actions.GroupNavigation
 
 ------------------------------------------------------------------------------
@@ -88,7 +88,6 @@ layoutHook = smartBorders Full
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
    ,((modm, xK_p), safeSpawn "dmenu_run" [])
-   ,((modm .|. controlMask, xK_y), commands >>= runCommand)
   -- Group navigation
   , ((modm, xK_comma), nextMatchWithThis Forward  className)
   , ((modm, xK_period), nextMatchWithThis Backward className)
@@ -122,6 +121,7 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $ [
   , ((modm .|. shiftMask, xK_Tab), rotSlavesUp)
 
   -- XMonad control
+  , ((modm .|. controlMask, xK_y), commands >>= runCommand)
   , ((modm .|. shiftMask, xK_q), XMonad.io exitSuccess)
   , ((modm, xK_q), XMonad.spawn "xmonad --recompile && xmonad --restart")
 
