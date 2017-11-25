@@ -29,6 +29,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Util.Run (safeSpawn)
 import XMonad.Actions.Commands
+import XMonad.Actions.GroupNavigation
 
 ------------------------------------------------------------------------------
 
@@ -51,6 +52,7 @@ config = def
        , XMonad.manageHook = manageHook
        , XMonad.workspaces = workspaces
        , XMonad.startupHook = banish LowerRight
+       , XMonad.logHook = historyHook
        }
 
 ------------------------------------------------------------------------------
@@ -87,6 +89,16 @@ keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
    ,((modm, xK_p), safeSpawn "dmenu_run" [])
    ,((modm .|. controlMask, xK_y), commands >>= runCommand)
+  -- Group navigation
+  , ((modm, xK_comma), nextMatchWithThis Forward  className)
+  , ((modm, xK_period), nextMatchWithThis Backward className)
+  , ((modm, xK_BackSpace), nextMatch History (return True)) -- most recent
+  , ((modm .|. controlMask, xK_e),
+      nextMatchOrDo Forward (className =? "Emacs") (safeSpawn "emacsclient" ["-c"]))
+  , ((modm .|. controlMask, xK_t),
+      nextMatchOrDo Forward (className =? "XTerm") (safeSpawn "xterm" []))
+  , ((modm .|. controlMask, xK_b),
+      nextMatchOrDo Forward (className =? "Firefox") (safeSpawn "web" []))
 
   -- Window management
   , ((modm, xK_w), goToSelected def)
