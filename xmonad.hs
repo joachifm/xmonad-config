@@ -3,6 +3,7 @@
 module Main (main) where
 
 import Data.Default (def)
+import Data.Ratio
 
 import Data.Bits ((.|.))
 import qualified Data.Map as M
@@ -80,13 +81,18 @@ manageHook = composeAll [
 
 ------------------------------------------------------------------------------
 
-layoutHook = smartBorders Full
+layoutHook = smartBorders (Full ||| Tall 1 (3%100) (1%2))
 
 ------------------------------------------------------------------------------
 
 keys conf@(XMonad.XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm .|. shiftMask, xK_Return), safeSpawn (XMonad.terminal conf) [])
   , ((modm, xK_p), safeSpawn "dmenu_run" [])
+
+  -- Layouts
+  , ((modm, xK_space ), sendMessage NextLayout)
+  , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+  , ((modm, xK_n), refresh)
 
   -- Group navigation
   , ((modm, xK_comma), nextMatchWithThis Forward  className)
